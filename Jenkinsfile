@@ -1,11 +1,6 @@
 pipeline {
     agent any
      stages {
-        stage('Version') {
-            steps {
-                sh 'az --version'          
-            }
-        }
         stage('Init') {
             steps {
                 sh 'terraform init'
