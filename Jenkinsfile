@@ -1,5 +1,13 @@
 pipeline {
     agent any
+    tools {
+    terraform 'tf'
+    }
+    environment {
+        TF_HOME = tool('tf')
+        TF_IN_AUTOMATION = 'true'
+        PATH = "$TF_HOME:$PATH"
+    }
      stages {
         stage('Init') {
             steps {
@@ -14,6 +22,7 @@ pipeline {
         stage('Clean up ') {
             steps {
                  withCredentials([azureServicePrincipal(
+                     credentialsId: 'SA_TF',
                     subscriptionIdVariable: 'ARM_SUBSCRIPTION_ID',
                     clientIdVariable: 'ARM_CLIENT_ID',
                     clientSecretVariable: 'ARM_CLIENT_SECRET',
