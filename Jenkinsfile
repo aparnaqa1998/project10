@@ -1,13 +1,5 @@
 pipeline {
     agent any
-    tools {
-    terraform 'tf'
-    }
-    environment {
-        TF_HOME = tool('tf')
-        TF_IN_AUTOMATION = 'true'
-        PATH = "$TF_HOME:$PATH"
-    }
      stages {
         stage('Init') {
             steps {
