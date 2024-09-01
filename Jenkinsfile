@@ -2,9 +2,10 @@ pipeline {
     agent any
     
     environment {
-        // Environment variables for credentials or other settings
-        TF_VAR_region = 'us-west-2'
-        TF_VAR_environment = 'production'
+        ARM_SUBSCRIPTION_ID = credentials('subscription-id')
+        ARM_CLIENT_ID       = credentials('client-id')
+        ARM_CLIENT_SECRET   = credentials('client-secret')
+        ARM_TENANT_ID       = credentials('tenant-id')
     }
 
     stages {
