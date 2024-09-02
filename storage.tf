@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "storageOne" {
-   name                     = "20240229111111"
+   name                     = "2024022911123456"
    resource_group_name      = azurerm_resource_group.resourcegroup.name
    location                 = azurerm_resource_group.resourcegroup.location
    account_tier             = "Standard"
