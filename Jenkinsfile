@@ -38,7 +38,7 @@ pipeline {
                 script {
                     def scannerHome = tool 'sonarqube-new'
                     withSonarQubeEnv('sonar-config') {
-                    bat "${scannerHome}/bin/sonar-scanner"
+                    bat "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=demosonar"
                     }
                 }
             }
