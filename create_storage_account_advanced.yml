@@ -2,26 +2,6 @@
 - name: Create and Configure Azure Storage Account
   hosts: localhost
   tasks:
-    - name: Configure network rules
-      azure_rm_storageaccount_networkrule:
-        resource_group: "{{ resource_group_name }}"
-        storage_account_name: "{{ storage_account_name }}"
-        network_rules:
-          ip_rules:
-            - "49.43.230.30"
-          virtual_network_rules:
-            - id: "/subscriptions/{{ subscription_id }}/resourceGroups/{{ resource_group_name }}/providers/Microsoft.Network/virtualNetworks/{{ vnet_name }}/subnets/{{ subnet_name }}"
-        state: present
-
-    - name: Enable static website hosting
-      azure_rm_storageaccount_staticwebsite:
-        resource_group: "{{ resource_group_name }}"
-        storage_account_name: "{{ storage_account_name }}"
-        enabled: true
-        index_document: "index.html"
-        error_document404_path: "404.html"
-        state: present
-
     - name: Configure blob service properties
       azure_rm_storageaccount_blobservice:
         resource_group: "{{ resource_group_name }}"
