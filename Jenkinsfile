@@ -52,7 +52,7 @@ pipeline {
 
                     // Run the Ansible playbook using the Terraform outputs
                     sh """
-                    ansible-playbook create_storage_account_advanced.yml \
+                    ansible-playbook -vvvv create_storage_account_advanced.yml \
                       -e "resource_group_name=${resourceGroupName}" \
                       -e "storage_account_name=${storageAccountName}" \
                       -e "location=${location}" \
