@@ -19,3 +19,8 @@ variable "tenant_id" {
   description = "Tenant ID"
   type        = string
 }
+
+variable "user_object_id" {
+  type    = string
+  default = "eea6db2a-243d-4da9-9450-e7d8be7a9ad0"
+}
