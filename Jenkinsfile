@@ -49,7 +49,6 @@ pipeline {
                     def resourceGroupName = outputs.resource_group_name.value
                     def storageAccountName = outputs.storage_account_name.value
                     def location = outputs.location.value
-                    def subscriptionId = outputs.subscription_id.value
 
                     // Run the Ansible playbook using the Terraform outputs
                     sh """
