@@ -48,6 +48,13 @@ pipeline {
         }
         stage('Configure Azure Storage with Ansible') {
             steps {
+                 withCredentials([azureServicePrincipal(
+                     credentialsId: 'SA_TF',
+                    subscriptionIdVariable: 'ARM_SUBSCRIPTION_ID',
+                    clientIdVariable: 'ARM_CLIENT_ID',
+                    clientSecretVariable: 'ARM_CLIENT_SECRET',
+                    tenantIdVariable: 'ARM_TENANT_ID'
+          )])  {
                 script {
                     // Extract Terraform outputs
                     def outputs = readJSON file: 'terraform_outputs.json'
@@ -62,11 +69,15 @@ pipeline {
                       -e "resource_group_name=${resourceGroupName}" \
                       -e "storage_account_name=${storageAccountName}" \
                       -e "location=${location}" \
-                      -e "subscription_id=${subscriptionId}"
+                      -e "subscription_id=${ARM_SUBSCRIPTION_ID}" \
+                      -e "client_id=${ARM_CLIENT_ID}" \
+                      -e "client_secret=${ARM_CLIENT_SECRET}" \
+                      -e "tenant_id=${ARM_TENANT_ID}"
                     """
                 }
             }
         }
     }
+  }
 }
 
