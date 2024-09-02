@@ -1,17 +1,37 @@
-resource "azurerm_policy_assignment" "tagging" {
-  name                 = "enforce-tagging"
-  scope                = azurerm_resource_group.resourcegroup.id
-  policy_definition_id = data.azurerm_policy_definition.tagging.id
-  parameters           = jsonencode({
-    tagName = {
-      value = "Environment"
+resource "azurerm_policy_definition" "example" {
+  name         = "only-deploy-in-westeurope"
+  policy_type  = "Custom"
+  mode         = "All"
+  display_name = "my-policy-definition"
+
+  policy_rule = <<POLICY_RULE
+ {
+    "if": {
+      "not": {
+        "field": "location",
+        "equals": "southindia"
+      }
+    },
+    "then": {
+      "effect": "Deny"
     }
-  })
-  description          = "This policy ensures that all resources are tagged with 'Environment'."
-  display_name         = "Enforce Tagging Policy"
-  depends_on           = [azurerm_resource_group.resourcegroup]
+  }
+POLICY_RULE
 }
 
-data "azurerm_policy_definition" "tagging" {
-  display_name = "Require a tag on resources"
+resource "azurerm_resource_group_policy_assignment" "example" {
+  name                 = "example"
+  resource_group_id    = azurerm_resource_group.resourcegroup.id
+  policy_definition_id = azurerm_policy_definition.example.id
+
+  parameters = <<PARAMS
+    {
+      "tagName": {
+        "value": "Business Unit"
+      },
+      "tagValue": {
+        "value": "BU"
+      }
+    }
+PARAMS
 }
