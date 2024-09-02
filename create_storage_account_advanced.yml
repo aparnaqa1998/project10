@@ -3,25 +3,12 @@
   hosts: localhost
   gather_facts: no
   tasks:
-    - name: Configure blob service properties
-      azure_rm_storageaccount_blobservice:
-        resource_group: "{{ resource_group_name }}"
-        storage_account_name: "{{ storage_account_name }}"
-        properties:
-          delete_retention_policy:
-            days: 7
-          enable_versioning: true
-        state: present
-
-    - name: Configure encryption settings
-      azure_rm_storageaccount_encryption:
-        resource_group: "{{ resource_group_name }}"
-        storage_account_name: "{{ storage_account_name }}"
-        encryption:
-          services:
-            blob:
-              enabled: true
-            file:
-              enabled: true
-          key_source: "Microsoft.Storage"
-        state: present
+   - name: Create container foo and upload a file
+     azure_rm_storageblob:
+       resource_group: "{{ resource_group_name }}"
+       storage_account_name: "{{ storage_account_name }}"
+       container: foo
+       blob: graylog.png
+       src: graylog.png
+       public_access: container
+       content_type: 'application/image'
