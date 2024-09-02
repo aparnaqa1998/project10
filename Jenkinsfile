@@ -33,7 +33,15 @@ pipeline {
                 bat 'terraform validate'
             }
         }
-        
+         stage('SonarQube Analysis') {
+            steps {
+                script {
+                    def scannerHome = tool 'SonarQube Scanner'
+                    withSonarQubeEnv('sonar-config') {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
+            }
     }
   }
 
