@@ -1,11 +1,6 @@
 pipeline {
     agent any
      stages {
-        stage('Init') {
-            steps {
-                bat 'terraform init'
-            }
-        }
         stage('Init - ugrade') {
             steps {
                 bat 'terraform init -upgrade'
