@@ -1,6 +1,7 @@
 ---
 - name: Create and Configure Azure Storage Account
   hosts: localhost
+  gather_facts: no
   tasks:
     - name: Configure blob service properties
       azure_rm_storageaccount_blobservice:
